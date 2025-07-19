@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инвестиции в светлое будущее</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-green: #00A859;
+            --secondary-green: #007840;
+            --dark-gray: #1a1a1a;
+            --medium-gray: #6c757d;
+            --light-gray: #f8f9fa;
+            --background-color: #fcfdff;
+            --white: #FFFFFF;
+            --error-red: #dc3545;
+            --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-medium: 0 8px 24px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            background-color: var(--background-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(45deg, var(--primary-green), var(--secondary-green));
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            box-shadow: 0 2px 8px rgba(0, 168, 89, 0.3);
+        }
+
+        .logo h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        /* Navigation */
+        .nav-links {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--medium-gray);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--dark-gray);
+            background-color: var(--light-gray);
+        }
+        
+        .nav-links a#nav-form {
+            background-color: var(--primary-green);
+            color: var(--white);
+            font-size: 0.9rem;
+            padding: 10px 20px;
+        }
+         .nav-links a#nav-form:hover {
+            background-color: var(--secondary-green);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-light);
+         }
+
+        .nav-links a.active {
+            color: var(--primary-green);
+            font-weight: 700;
+        }
+        
+        .admin-btn {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: var(--medium-gray);
+            padding: 10px;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        .admin-btn:hover {
+            color: var(--dark-gray);
+            background-color: var(--light-gray);
+        }
+
+        /* Sections & Hero */
+        main { flex-grow: 1; }
+        .section {
+            display: none;
+            animation: fadeIn 0.7s ease-in-out;
+            padding: 60px 0;
+        }
+        .section.active { display: block; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .hero h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .hero h2 .highlight {
+            color: var(--primary-green);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--medium-gray);
+            max-width: 800px;
+            margin: 0 auto 40px auto;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--primary-green), var(--secondary-green));
+            color: var(--white);
+            border: none;
+            padding: 18px 36px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: var(--shadow-medium);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+        }
+        
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: wait;
+            background: var(--medium-gray);
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Form Container */
+        .form-container {
+            background: var(--white);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            margin: 0 auto;
+            max-width: 800px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .form-container h2 { text-align: center; margin-bottom: 40px; font-size: 2rem;}
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group.full-width { grid-column: 1 / -1; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 1rem; }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ced4da;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: var(--light-gray);
+        }
+        .form-group textarea { resize: vertical; min-height: 100px;}
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-green);
+            box-shadow: 0 0 0 3px rgba(0, 168, 89, 0.15);
+            background: var(--white);
+        }
+        .form-group.error input, .form-group.error select, .form-group.error textarea { border-color: var(--error-red); }
+        .form-group .error-message {
+            color: var(--error-red);
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+            min-height: 1em;
+        }
+        .form-group.error .error-message { display: block; }
+        .form-center { display: flex; justify-content: center; margin-top: 30px; }
+
+        /* Admin Panel */
+        #admin-panel h3 { text-align: center; font-size: 2rem; margin-bottom: 10px; }
+        #admin-panel .subtitle { text-align: center; color: var(--medium-gray); margin-bottom: 40px; }
+        .admin-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+        }
+        .applications-count { font-size: 1.1rem; font-weight: 600; }
+        .btn-clear {
+            background: #fff6f6;
+            color: var(--error-red);
+            border: 1px solid #f5c6cb;
+            padding: 10px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 8px;
+        }
+        .btn-clear:hover { background: var(--error-red); color: var(--white); }
+
+        .applications-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 25px;
+        }
+        .application-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            padding: 25px;
+            transition: var(--transition);
+            border: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .application-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-medium); }
+        
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .card-header h4 { font-size: 1.25rem; font-weight: 700; margin-right: 10px;}
+        .card-header .timestamp { font-size: 0.85rem; color: var(--medium-gray); text-align: right; }
+        
+        .card-body .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 0.95rem;
+            color: #495057;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f3f5;
+        }
+        .card-body .info-item:last-child { border-bottom: none; }
+        .card-body .info-item svg { width: 18px; height: 18px; color: var(--medium-gray); flex-shrink: 0; margin-top: 3px; }
+        .card-body .info-item strong { color: var(--dark-gray); }
+        .card-body .info-item .goal-text { word-break: break-word; }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--medium-gray);
+            background: var(--white);
+            border-radius: var(--border-radius);
+            border: 1px dashed #ced4da;
+        }
+        
+        .modal {
+            position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(5px);
+            display: none; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: var(--white); padding: 40px; border-radius: 20px;
+            max-width: 450px; width: 90%;
+        }
+        .modal h3 { text-align: center; margin-bottom: 25px; }
+        .modal .btn { width: 100%; margin-top: 10px; }
+
+        footer {
+            background: var(--dark-gray);
+            color: #a9aeb3;
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 80px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h2 { font-size: 2.5rem; }
+            .form-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    </div>
+                    <h1>Quantum Invest</h1>
+                </div>
+                <nav class="nav-links">
+                    <a id="nav-home" href="#">Главная</a>
+                    <a id="nav-form" href="#">Оставить заявку</a>
+                    <button class="admin-btn" id="admin-btn" title="Панель администратора">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/></svg>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="home" class="section active">
+            <div class="hero">
+                <h2>Инвестиции в <span class="highlight">светлое будущее</span></h2>
+                <p>Откройте доступ к проверенным финансовым инструментам для обеспечения стабильного роста вашего капитала.</p>
+                <button class="btn" id="to-form-btn">Получить консультацию</button>
+            </div>
+        </section>
+
+        <section id="form" class="section">
+            <div class="form-container">
+                <h2>Анкета инвестора</h2>
+                <div id="success-message" style="display: none; text-align: center; padding: 20px; background-color: #e6f8f0; border-radius: 12px; color: #007840; margin-bottom: 20px;">
+                    <strong>Заявка успешно отправлена!</strong> Наш менеджер свяжется с вами в ближайшее время.
+                </div>
+                <form id="application-form" novalidate>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">Имя</label>
+                            <input type="text" id="firstName" required placeholder="Иван">
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Фамилия</label>
+                            <input type="text" id="lastName" required placeholder="Иванов">
+                            <span class="error-message"></span>
+                        </div>
+                         <div class="form-group">
+                            <label for="phone">Контактный Телефон *</label>
+                            <input type="tel" id="phone" required placeholder="+7 (999) 123-45-67">
+                            <span class="error-message"></span>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" required placeholder="example@mail.com">
+                            <span class="error-message"></span>
+                        </div>
+                    </div>
+                     <div class="form-group full-width">
+                        <label for="experience">Опыт инвестирования *</label>
+                        <select id="experience" required>
+                            <option value="" disabled selected>-- Выберите ваш уровень --</option>
+                            <option value="Нет опыта">Нет опыта</option>
+                            <option value="Менее 1 года">Менее 1 года</option>
+                            <option value="1-3 года">1-3 года</option>
+                            <option value="Более 3 лет">Более 3 лет</option>
+                        </select>
+                        <span class="error-message"></span>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="desiredIncome">Желаемый ежемесячный доход (₽) *</label>
+                        <input type="number" id="desiredIncome" required placeholder="Например: 50000" min="10000" step="1000">
+                        <span class="error-message"></span>
+                    </div>
+                     <div class="form-group full-width">
+                        <label for="goal">Опишите ваши финансовые цели</label>
+                        <textarea id="goal" placeholder="Накопить на квартиру, создать пассивный доход, обеспечить образование детей..."></textarea>
+                         <span class="error-message"></span>
+                    </div>
+                    <div class="form-center">
+                         <button type="submit" class="btn" id="submit-btn">Отправить анкету</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="admin-panel" class="section">
+             <h3>Панель Администратора</h3>
+             <p class="subtitle">Просмотр всех поступивших заявок</p>
+             <div class="admin-controls">
+                <div class="applications-count">Всего заявок: <span id="applications-count">0</span></div>
+                <button class="btn-clear" id="clear-applications">Очистить Все</button>
+            </div>
+            <div id="admin-content">
+                <div class="applications-grid" id="applications-grid"></div>
+                <div id="empty-state" class="empty-state" style="display: none;"><h4>Заявок пока нет</h4></div>
+            </div>
+        </section>
+    </main>
+    
+     <div id="admin-modal" class="modal">
+        <div class="modal-content">
+            <h3>Вход в панель</h3>
+            <div class="form-group">
+                <label for="admin-password">Пароль</label>
+                <input type="password" id="admin-password" autocomplete="current-password">
+            </div>
+            <button class="btn" id="admin-login">Войти</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Quantum Invest. Все права защищены. Информация не является публичной офертой.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const App = {
+                API_URL: 'https://api.npoint.io/4e022b7a9a83856d3330',
+                ADMIN_PASSWORD: '20070510',
+                
+                init() {
+                    this.cacheElements();
+                    this.bindEvents();
+                    this.showSection('home');
+                    window.addEventListener('scroll', () => this.header.classList.toggle('scrolled', window.scrollY > 10));
+                },
+
+                cacheElements() {
+                    this.header = document.getElementById('header');
+                    this.sections = document.querySelectorAll('.section');
+                    this.navLinks = document.querySelectorAll('.nav-links a');
+                    this.adminBtn = document.getElementById('admin-btn');
+                    this.toFormBtn = document.getElementById('to-form-btn');
+                    this.applicationForm = document.getElementById('application-form');
+                    this.submitBtn = document.getElementById('submit-btn');
+                    this.adminModal = document.getElementById('admin-modal');
+                    this.adminLoginBtn = document.getElementById('admin-login');
+                    this.adminPasswordInput = document.getElementById('admin-password');
+                    
+                    this.adminContent = document.getElementById('admin-content');
+                    this.applicationsGrid = document.getElementById('applications-grid');
+                    this.applicationsCountEl = document.getElementById('applications-count');
+                    this.clearApplicationsBtn = document.getElementById('clear-applications');
+                    this.emptyStateEl = document.getElementById('empty-state');
+                    
+                    this.formFields = {
+                        firstName: document.getElementById('firstName'),
+                        lastName: document.getElementById('lastName'),
+                        phone: document.getElementById('phone'),
+                        email: document.getElementById('email'),
+                        experience: document.getElementById('experience'),
+                        desiredIncome: document.getElementById('desiredIncome'),
+                        goal: document.getElementById('goal'),
+                    };
+                },
+
+                bindEvents() {
+                    this.navLinks.forEach(link => {
+                        link.addEventListener('click', e => {
+                            e.preventDefault();
+                            this.showSection(link.id.replace('nav-', ''));
+                        });
+                    });
+
+                    this.toFormBtn.addEventListener('click', () => this.showSection('form'));
+                    this.adminBtn.addEventListener('click', () => this.adminModal.style.display = 'flex');
+                    this.adminModal.addEventListener('click', e => {
+                        if (e.target === this.adminModal) e.target.style.display = 'none';
+                    });
+                    this.adminLoginBtn.addEventListener('click', () => this.handleAdminLogin());
+                    this.adminPasswordInput.addEventListener('keypress', e => {
+                        if (e.key === 'Enter') this.handleAdminLogin();
+                    });
+
+                    this.applicationForm.addEventListener('submit', e => this.handleFormSubmit(e));
+                    this.clearApplicationsBtn.addEventListener('click', () => this.clearAllApplications());
+                },
+                
+                showSection(sectionId) {
+                    this.sections.forEach(s => s.classList.remove('active'));
+                    document.getElementById(sectionId)?.classList.add('active');
+
+                    this.navLinks.forEach(l => l.classList.toggle('active', l.id === `nav-${sectionId}`));
+
+                    if (sectionId === 'admin-panel') this.loadApplications();
+                },
+                
+                handleAdminLogin() {
+                    if (this.adminPasswordInput.value === this.ADMIN_PASSWORD) {
+                        this.adminModal.style.display = 'none';
+                        this.adminPasswordInput.value = '';
+                        this.showSection('admin-panel');
+                    } else {
+                        alert('Неверный пароль.');
+                    }
+                },
+                
+                // --- API & Data Handling ---
+                
+                async fetchAPI(method = 'GET', body = null) {
+                    const options = {
+                        method,
+                        headers: { 'Content-Type': 'application/json' },
+                    };
+                    if (body) options.body = JSON.stringify(body);
+                    
+                    const response = await fetch(this.API_URL, options);
+                    if (!response.ok) throw new Error(`API Error: ${response.statusText}`);
+                    // npoint returns empty body on POST, handle it
+                    const text = await response.text();
+                    return text ? JSON.parse(text) : {};
+                },
+                
+                async loadApplications() {
+                    this.applicationsGrid.innerHTML = '';
+                    this.emptyStateEl.style.display = 'none';
+                    this.showLoader(true);
+
+                    try {
+                        const applications = await this.fetchAPI() || [];
+                        this.displayApplications(applications);
+                    } catch (error) {
+                        console.error('Error loading applications:', error);
+                        this.applicationsGrid.innerHTML = `<p style="color: var(--error-red); text-align: center;">Ошибка загрузки данных.</p>`;
+                    } finally {
+                        this.showLoader(false);
+                    }
+                },
+                
+                displayApplications(apps) {
+                    this.applicationsGrid.innerHTML = '';
+                    this.applicationsCountEl.textContent = apps.length;
+                    this.emptyStateEl.style.display = apps.length === 0 ? 'block' : 'none';
+                    
+                    apps.sort((a, b) => b.id - a.id).forEach(app => {
+                        this.applicationsGrid.innerHTML += this.createApplicationCard(app)
+                    });
+                },
+                
+                createApplicationCard(app) {
+                    return `
+                        <div class="application-card">
+                            <div class="card-header">
+                                <h4>${app.firstName || ''} ${app.lastName || ''}</h4>
+                                <span class="timestamp">${new Date(app.id).toLocaleString('ru-RU')}</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    <strong>${app.phone}</strong>
+                                </div>
+                                <div class="info-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                    <strong>${app.email}</strong>
+                                </div>
+                                <div class="info-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                                    <span>Опыт: <strong>${app.experience}</strong></span>
+                                </div>
+                                <div class="info-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                                    <span>Доход: <strong>${Number(app.desiredIncome).toLocaleString('ru-RU')} ₽</strong></span>
+                                </div>
+                                <div class="info-item">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 2v6h6M21.5 22v-6h-6"/><path d="M22 11.5A10 10 0 0 0 3.5 12.5"/><path d="M2 12.5a10 10 0 0 0 18.5-1"/></svg>
+                                    <span class="goal-text">Цель: <strong>${app.goal || 'Не указана'}</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                },
+
+                async handleFormSubmit(e) {
+                    e.preventDefault();
+                    if (!this.validateForm()) return;
+
+                    this.submitBtn.disabled = true;
+                    this.submitBtn.textContent = 'Отправка...';
+
+                    const newApplication = { id: Date.now() };
+                    Object.keys(this.formFields).forEach(key => {
+                        newApplication[key] = this.formFields[key].value.trim();
+                    });
+
+                    try {
+                        const currentApps = await this.fetchAPI() || [];
+                        await this.fetchAPI('POST', [...currentApps, newApplication]);
+                        
+                        this.applicationForm.reset();
+                        this.applicationForm.style.display = 'none';
+                        document.getElementById('success-message').style.display = 'block';
+                        setTimeout(() => {
+                           document.getElementById('success-message').style.display = 'none';
+                           this.applicationForm.style.display = 'block';
+                           this.showSection('home');
+                        }, 4000);
+
+                    } catch (error) {
+                        console.error('Submit error:', error);
+                        alert('Произошла ошибка при отправке. Пожалуйста, попробуйте еще раз.');
+                    } finally {
+                        this.submitBtn.disabled = false;
+                        this.submitBtn.textContent = 'Отправить анкету';
+                    }
+                },
+                
+                async clearAllApplications() {
+                    if (confirm('Вы уверены, что хотите удалить ВСЕ заявки? Это действие необратимо.')) {
+                        this.showLoader(true);
+                        try {
+                            await this.fetchAPI('POST', []);
+                            this.loadApplications();
+                        } catch (error) {
+                            alert('Ошибка при очистке заявок.');
+                        } finally {
+                            this.showLoader(false);
+                        }
+                    }
+                },
+                
+                // --- Validation & UI ---
+                validateForm() {
+                    return Object.values(this.formFields).reduce((valid, input) => this.validateField(input) && valid, true);
+                },
+
+                validateField(input) {
+                    const group = input.closest('.form-group');
+                    const errorEl = group.querySelector('.error-message');
+                    group.classList.remove('error');
+                    errorEl.textContent = '';
+                    let message = '';
+
+                    if (input.required && !input.value.trim()) {
+                        message = 'Это поле обязательно для заполнения.';
+                    } else if (input.value) { // Only validate non-empty fields further
+                        if (input.id === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+                            message = 'Введите корректный email адрес.';
+                        } else if (input.id === 'phone' && !/^\+?\d[\d\s-()]{9,15}\d$/.test(input.value)) {
+                            message = 'Введите корректный номер телефона.';
+                        } else if (input.id === 'desiredIncome' && Number(input.value) < 10000) {
+                            message = 'Минимальная сумма 10 000 ₽.';
+                        }
+                    }
+
+                    if (message) {
+                        group.classList.add('error');
+                        errorEl.textContent = message;
+                        return false;
+                    }
+                    return true;
+                },
+                
+                showLoader(show) {
+                    let loader = this.adminContent.querySelector('.loader');
+                    if (show && !loader) {
+                       loader = document.createElement('div');
+                       loader.className = 'loader';
+                       this.adminContent.prepend(loader);
+                    } else if (!show && loader) {
+                        loader.remove();
+                    }
+                }
+            };
+
+            App.init();
+        });
+    </script>
+</body>
+</html>
